@@ -1,0 +1,3 @@
+<div class="from"><a href="%id%">%id%</a></div>
+<hr/><pre wrap="on">%text%</pre><hr/>
+<div class="back"><a href="%$&SCRIPT_NAME%">back</a></div>

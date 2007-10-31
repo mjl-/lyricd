@@ -1,0 +1,28 @@
+%include httpheaders
+
+%include htmlstart
+<div class="heading">
+<h1>pylyrics</h1>
+</div>
+<div class="entreeform">
+<form method="get" action="%$&SCRIPT_NAME%/fetch">
+	<table>
+		<tr>
+			<td class="label">artist</td>
+			<td><input type="text" name="artist"/></td>
+		</tr>
+		<tr>
+			<td class="label">title</td>
+			<td><input type="text" name="title"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="search"/></td>
+		</tr>
+	</table>
+</form>
+</div>
+<div class="descr">
+<a href="http://www.xs4all.nl/~mechiel/projects/pylyrics/">pylyrics website</a>
+</div>
+%include htmlend

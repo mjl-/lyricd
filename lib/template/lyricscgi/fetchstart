@@ -1,0 +1,12 @@
+%include httpheaders
+%include htmlstart
+
+<div class="back"><a href="%$&SCRIPT_NAME%">back</a></div>
+<div class="nextsearch">
+<form method="get" action="%$&SCRIPT_NAME%/fetch">
+	<input type="hidden" name="page" value="fetch"/>
+	<span class="labelsmall">artist:</span><input class="inline" type="text" name="artist" value="%artist%"/>
+	<span class="labelsmall">title:</span><input class="inline" type="text" name="title"/>
+	<input type="submit" value="search"/>
+</form>
+</div>

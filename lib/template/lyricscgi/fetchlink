@@ -1,0 +1,1 @@
+<li>[%score%] (<a href="%id%">ext</a>) <a href="%$&SCRIPT_NAME%/%&artist%/%&title%/%&site%?url=%#id%">%id%</a></li>

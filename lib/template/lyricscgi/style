@@ -1,0 +1,18 @@
+%include httpheaderscss
+body		{ font-family: trebuchet ms, verdana, sans-serif; font-size: 0.8em; }
+div.nothing	{ margin-top: 2.5em; margin-bottom: 2.5em; }
+div.heading	{ text-align: center; width: 100%%; margin-top: 8em; }
+div.entreeform	{ text-align: center; margin: 3em; }
+div.entreeform table	{ margin: auto; }
+div.descr	{ text-align: center; width: 100%%; }
+td.small	{ margin-right: 1.5em; text-align: right; }
+span.labelsmall { margin-right: 1em; } 
+input.inline 	{ margin-right: 0.5em; }
+div.back 	{ margin-top: 0.8em; margin-bottom: 0.8em; }
+td		{ font-family: trebuchet ms, verdana, sans-serif; }
+ul 		{ list-style-type: none; padding: 0em; margin: 0em; margin-top: 0.5em; margin-bottom: 0.5em; }
+div.error	{ color: red; font-weight: bold; }
+span.miss	{ color: rgb(60, 60, 60); }
+span.hit	{ font-weight: bold; }
+div.from	{ margin-top: 1em; }
+pre		{ font-size: 1.3em; }

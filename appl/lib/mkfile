@@ -1,0 +1,22 @@
+<../../mkconfig
+
+DIRS=\
+	lyricd\
+
+TARG=\
+	lyrics.dis\
+	misc.dis\
+
+MODULES=\
+
+SYSMODULES=\
+	sys.m\
+	draw.m\
+	bufio.m\
+	string.m\
+	lyrics.m\
+
+DISBIN=$ROOT/dis/lib
+
+<$ROOT/mkfiles/mkdis
+<$ROOT/mkfiles/mksubdirs

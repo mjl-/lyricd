@@ -1,0 +1,22 @@
+<../../mkconfig
+
+TARG=\
+	lyric.dis\
+	lyricd.dis\
+	lyricscgi.dis\
+
+SYSMODULES=\
+	sys.m\
+	draw.m\
+	arg.m\
+	bufio.m\
+	regex.m\
+	misc.m\
+	lyrics.m\
+	cgi.m\
+	lyricutils.m\
+	template.m\
+
+DISBIN=$ROOT/dis
+
+<$ROOT/mkfiles/mkdis

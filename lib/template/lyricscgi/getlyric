@@ -1,0 +1,8 @@
+%include httpheaders
+%include htmlstart
+
+<div class="back"><a href="%$&SCRIPT_NAME%">back</a></div>
+
+%include lyric
+
+%include htmlend

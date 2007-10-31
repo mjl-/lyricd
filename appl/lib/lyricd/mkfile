@@ -1,0 +1,29 @@
+<../../../mkconfig
+
+DISBIN=$ROOT/dis/lib/lyricd
+
+TARG=\
+	azlyrics.dis\
+	darklyrics.dis\
+	elyrics.dis\
+	lyrc.dis\
+	lyricsdownload.dis\
+	lyricutils.dis\
+	plyrics.dis\
+	rarelyrics.dis\
+	sing365.dis\
+
+MODULES=\
+
+SYSMODULES=\
+	lyrics.m\
+	lyricsite.m\
+	lyricutils.m\
+	bufio.m\
+	draw.m\
+	regex.m\
+	sh.m\
+	string.m\
+	sys.m\
+
+<$ROOT/mkfiles/mkdis

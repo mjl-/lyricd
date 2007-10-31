@@ -1,0 +1,22 @@
+lyricd - lyric daemon and client
+
+to install make sure this directory has a mkconfig.  you can bind/symlink
+the mkconfig from your inferno installation.  now execute "mk install"
+and all should be well.  you also need the package "web".
+
+
+documentation is currently missing unfortunately.  it is on my todo list.
+in short:
+- appl/lib/lyrics.b and module/lyrics.m is the client library to the daemon.
+- appl/cmd/lyricd.b is the daemon, and appl/lib/lyricd/*.b are the
+  implementations of various sites to search on and take from.
+- appl/cmd/lyric.b is a command-line tool for retrieving lyrics.
+- appl/cmd/lyricsgi.b is a scgi website front-end.  the templates lives
+  in lib/template/lyriscgi/
+
+retrieve the latest version by:
+
+	hg clone static-http://www.ueber.net/who/mjl/hg/lyricd/
+
+all files are in the public domain.  bug reports, new code, comments
+and more are welcome at mechiel@xs4all.nl or mechiel@ueber.net.
