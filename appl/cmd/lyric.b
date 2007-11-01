@@ -13,7 +13,7 @@ lyrics: Lyrics;
 Lsrv, ALL, FIRST, LINKS: import lyrics;
 print, fprint, sprint: import sys;
 
-addr := "tcp!localhost!7115";
+addr := "net!localhost!7115";
 dflag := 1;
 vflag := 1;
 sites: list of string;
@@ -52,12 +52,11 @@ init(nil: ref Draw->Context, args: list of string)
 		}
 	args = arg->argv();
 	if(len args != 3) {
-warn(sprint("have %d", len args));
 		warn("need three arguments");
 		arg->usage();
 	}
 
-	(lsrv, connerr) := lyrics->connect("tcp!knaagkever.ueber.net!7115");
+	(lsrv, connerr) := lyrics->connect(addr);
 	if(connerr != nil)
 		error("connecting: "+connerr);
 
