@@ -9,7 +9,6 @@ include "bufio.m";
 	bufio: Bufio;
 	Iobuf: import bufio;
 include "regex.m";
-include "misc.m";
 include "cgi.m";
 include "filter.m";
 include "ohttp.m";
@@ -19,7 +18,6 @@ include "lyricutils.m";
 
 sys: Sys;
 str: String;
-misc: Misc;
 cgi: Cgi;
 
 regex: Regex;
@@ -53,13 +51,11 @@ init()
 			error("loading convcs btos module: "+btoserr);
 		convs[i] = (enc, mod);
 	}
-	misc = load Misc Misc->PATH;
 	http = load Http Http->PATH;
 	cgi = load Cgi Cgi->PATH;
 	htmlent = load Htmlent Htmlent->PATH;
-	if(misc == nil || http == nil || cgi == nil || htmlent == nil)
-		error("loading misc,http,cgi,htmlent");
-	misc->init();
+	if(http == nil || cgi == nil || htmlent == nil)
+		error("loading http,cgi,htmlent");
 	cgi->init();
 	htmlent->init();
 	http->init(bufio);
@@ -190,7 +186,6 @@ matchall(re: Regex->Re, s: string): list of array of string
 	return rev(l);
 }
 
-
 htmlstrip(s: string): string
 {
 	r: string;
@@ -221,9 +216,9 @@ sanitize(s: string): string
 
 	a := l2a(split(s, "\n"));
 	for(i := 0; i < len a; i++)
-		a[i] = misc->strip(a[i], " \t\r\n");
+		a[i] = strip(a[i], " \t\r\n");
 	s = join(a2l(a), "\n");
-	s = misc->strip(s, " \t\r\n");
+	s = strip(s, " \t\r\n");
 	return s;
 }
 
@@ -236,7 +231,7 @@ hasterms(s: string, l: list of string): int
 {
 	s = str->tolower(s);
 	for(; l != nil; l = tl l)
-		if(!misc->infix(str->tolower(hd l), s))
+		if(!infix(str->tolower(hd l), s))
 			return 0;
 	return 1;
 }
@@ -246,7 +241,7 @@ score(s: string, words: list of string): int
 	s = str->tolower(s);
 	n := 0;
 	for(l := words; l != nil; l = tl l)
-		if(misc->infix(hd l, s))
+		if(infix(hd l, s))
 			n++;
 	if(len words == 0)
 		return 0;
@@ -275,7 +270,7 @@ rate(links: array of ref Link, how: int, title, artist: list of string): list of
 			v /= n;
 		links[i].score = v;
 	}
-	misc->insertsort(links);
+	insertsort(links);
 	return a2l(links);
 }
 
@@ -316,16 +311,6 @@ replace(s, src, dst: string): string
 
 # generic helper functions
 
-
-split(s, splitstr: string): list of string
-{
-	return misc->split(s, splitstr);
-}
-
-splitcl(s, splitcl: string): list of string
-{
-	return misc->splitcl(s, splitcl);
-}
 
 l2a[T](l: list of T): array of T
 {
@@ -382,4 +367,64 @@ say(s: string)
 {
 	# xxx if(dflag)
 	sys->fprint(sys->fildes(2), "%s\n", s);
+}
+
+droptl(s, cl: string): string
+{
+	while(s != nil)
+		if(str->in(s[len s - 1], cl))
+			s = s[:len s - 1];
+		else
+			break;
+	return s;
+}
+
+strip(s, cl: string): string
+{
+	return str->drop(droptl(s, cl), cl);
+}
+
+infix(instr, s: string): int
+{
+	for(i := 0; i < len s - len instr + 1; i++)
+		if(str->prefix(instr, s[i:]))
+			return 1;
+	return 0;
+}
+
+split(s, splitstr: string): list of string
+{
+	l: list of string;
+	for(;;) {
+		(left, right) := str->splitstrl(s, splitstr);
+		l = left::l;
+		if(right == nil)
+			break;
+		s = right[len splitstr:];
+	}
+	return rev(l);
+}
+
+splitcl(s, splitcl: string): list of string
+{
+	l: list of string;
+	for(;;) {
+		(left, right) := str->splitl(s, splitcl);
+		l = left::l;
+		if(right == nil)
+			break;
+		s = right[1:];
+	}
+	return rev(l);
+}
+
+insertsort[T](a: array of T)
+	for { T =>	cmp:	fn(a, b: T): int; }
+{
+	for(i := 1; i < len a; i++) {
+		tmp := a[i];
+		for(j := i; j > 0 && T.cmp(a[j-1], tmp) > 0; j--)
+			a[j] = a[j-1];
+		a[j] = tmp;
+	}
 }

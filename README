@@ -1,9 +1,10 @@
 lyricd - lyric daemon and client
 
 to install make sure this directory has a mkconfig.  you can bind/symlink
-the mkconfig from your inferno installation.  now execute "mk install"
-and all should be well.  you also need the package "web".
-
+the mkconfig from your inferno installation.  now execute "mk install",
+manually copy the lib/template/lyricscgi to your inferno installation
+and all should be well.  you also need the package "web", available
+from http://www.xs4all.nl/~mechiel/.
 
 documentation is currently missing unfortunately.  it is on my todo list.
 in short:

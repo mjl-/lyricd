@@ -13,13 +13,11 @@ init()
 	sys = load Sys Sys->PATH;
 	str = load String String->PATH;
 	cgi = load Cgi Cgi->PATH;
-	misc = load Misc Misc->PATH;
 	lyricutils = load Lyricutils Lyricutils->PATH;
 
-	if(cgi == nil || misc == nil)
+	if(cgi == nil)
 		raise "fail:loading modules";
 	cgi->init();
-	misc->init();
 	lyricutils->init();
 
 	name = modname;
@@ -38,7 +36,7 @@ search(title, artist: list of string): (list of ref Link, string)
 	j := 0;
 	for(i := 0; i < len hits; i++) {
 		(url, nil) := hits[i];
-		if(!misc->infix(".html", url) || score(url, title) < 60)
+		if(!infix(".html", url) || score(url, title) < 60)
 			continue;
 		links[j++] = Link.mk(join(artist, " "), join(title, " "), url, modname, 0);
 	}

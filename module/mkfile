@@ -4,7 +4,6 @@ MODS=\
 	lyricsite.m\
 	lyrics.m\
 	lyricutils.m\
-	misc.m\
 
 MODDIR=$ROOT/module
 

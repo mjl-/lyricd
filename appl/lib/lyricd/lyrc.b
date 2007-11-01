@@ -13,13 +13,11 @@ init()
 	sys = load Sys Sys->PATH;
 	str = load String String->PATH;
 	cgi = load Cgi Cgi->PATH;
-	misc = load Misc Misc->PATH;
 	lyricutils = load Lyricutils Lyricutils->PATH;
 
-	if(cgi == nil || misc == nil)
+	if(cgi == nil)
 		raise "fail:loading modules";
 	cgi->init();
-	misc->init();
 	lyricutils->init();
 
 	name = modname;

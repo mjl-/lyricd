@@ -8,7 +8,6 @@ include "bufio.m";
 	bufio: Bufio;
 	Iobuf: import bufio;
 include "regex.m";
-include "misc.m";
 include "cgi.m";
 include "lyricutils.m";
 

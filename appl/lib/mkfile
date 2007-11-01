@@ -5,7 +5,6 @@ DIRS=\
 
 TARG=\
 	lyrics.dis\
-	misc.dis\
 
 MODULES=\
 

@@ -41,6 +41,7 @@ Lyricutils: module {
 	splitcl:	fn(s, splitcl: string): list of string;
 	append:		fn[T](l1, l2: list of T): list of T;
 	replace:	fn(s, src, dst: string): string;
+	infix:		fn(instr, s: string): int;
 };
 
 

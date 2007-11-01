@@ -7,11 +7,9 @@ include "bufio.m";
 	bufio: Bufio;
 	Iobuf: import bufio;
 include "regex.m";
-include "misc.m";
 include "lyrics.m";
 
 sys: Sys;
-misc: Misc;
 lyrics: Lyrics;
 Lsrv, ALL, FIRST, LINKS: import lyrics;
 print, fprint, sprint: import sys;
@@ -31,10 +29,7 @@ init(nil: ref Draw->Context, args: list of string)
 {
 	sys = load Sys Sys->PATH;
 	arg := load Arg Arg->PATH;
-	misc = load Misc Misc->PATH;
 	lyrics = load Lyrics Lyrics->PATH;
-	if(misc == nil)
-		nomod(Misc->PATH);
 	if(lyrics == nil)
 		nomod(Lyrics->PATH);
 
@@ -45,7 +40,7 @@ init(nil: ref Draw->Context, args: list of string)
 		case c {
 		'a' =>	addr = arg->earg();
 		'd' =>	dflag++;
-		's' =>	sites = misc->split(arg->earg(), ",");
+		's' =>	sites = sys->tokenize(arg->earg(), ",").t1;
 		't' =>	case arg->earg() {
 			"all" =>	rtype = ALL;
 			"first" =>	rtype = FIRST;
