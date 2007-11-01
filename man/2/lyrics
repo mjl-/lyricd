@@ -1,0 +1,19 @@
+.TH LYRICS 2
+.SH NAME
+lyrics - retrieve lyric
+.SH SYNOPSIS
+.EE
+include "lyrics.m";
+
+lyrics: Lyrics;
+Lsrv, ALL, FIRST, LINKS: import lyrics;
+.EX
+.SH DESCRIPTION
+.B Lyrics
+is a client library for the lyric protocol.
+See the source of
+.IR lyric (1)
+for examples of how to use it.  This library is otherwise undocumented.
+.SH SEE ALSO
+.IR lyric (1),
+.IR lyricd (1)

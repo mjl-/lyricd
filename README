@@ -6,14 +6,14 @@ manually copy the lib/template/lyricscgi to your inferno installation
 and all should be well.  you also need the package "web", available
 from http://www.xs4all.nl/~mechiel/.
 
-documentation is currently missing unfortunately.  it is on my todo list.
-in short:
-- appl/lib/lyrics.b and module/lyrics.m is the client library to the daemon.
-- appl/cmd/lyricd.b is the daemon, and appl/lib/lyricd/*.b are the
-  implementations of various sites to search on and take from.
-- appl/cmd/lyric.b is a command-line tool for retrieving lyrics.
-- appl/cmd/lyricsgi.b is a scgi website front-end.  the templates lives
-  in lib/template/lyriscgi/
+lyricd and lyric, the daemon and client, are documented in their manual pages.
+
+the lyric library, lyrics, is not documented since it is unlikely anyone
+will ever write another client.
+
+lyricscgi is also undocumented since there is nothing
+to document about it, use it with scgid, available at
+http://www.xs4all.nl/~mechiel/inferno/.
 
 retrieve the latest version by:
 

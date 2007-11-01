@@ -1,0 +1,30 @@
+.TH LYRICD 1
+.SH NAME
+lyricd - serve lyrics
+.SH SYNOPSIS
+.B lyricd
+[
+.B -d
+] [
+.BI -a " addr"
+]
+.SH DESCRIPTION
+.B Lyricd
+serves lyrics over a simple protocol.  It searches for and retrieves
+lyrics from various websites on the internet, cleans up the lyrics and
+returns them.  The protocol has not yet been documented.
+.PP
+Option
+.B -d
+enables debugging output.
+The address to listen on can be changed with
+.B -a
+.IR addr ,
+the default is
+.IR net!localhost!7115 .
+.PP
+These sites are currently searched in:
+azlyrics, elyrics, lyrc, sing365, rarelyrics, lyricsdownload, plyrics, darklyrics.
+.SH SEE ALSO
+.IR lyric (1),
+.IR lyrics (2)

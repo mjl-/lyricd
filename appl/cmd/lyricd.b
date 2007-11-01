@@ -25,7 +25,7 @@ Lyricd: module {
 
 version: con "pylyrics-12";
 
-addr := "tcp!localhost!7115";
+addr := "net!localhost!7115";
 dflag := 0;
 timeout := 10;	# seconds
 

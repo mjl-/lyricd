@@ -1,0 +1,66 @@
+.TH LYRIC 1
+.SH NAME
+lyric - retrieve lyric
+.SH SYNOPSIS
+.B lyric
+[
+.B -dv
+] [
+.BI -a " addr"
+] [
+.BI -s " sites"
+] [
+.BI -t " type"
+] [
+get site url | search title artist | fetch title artist
+]
+.SH DESCRIPTION
+.B Lyric
+is a command-line program that retrieves lyrics from
+.IR lyricd (1).
+Lyrics can be searched with the command
+.IR search ,
+.I get
+retrieves a lyric from a link previously returned by a
+.IR search .
+.I Fetch
+searches for the lyric and fetches it.
+.PP
+Options:
+.TP
+.BI -a " addr"
+Dial
+.I addr
+instead of the details net!localhost!7115.
+.TP
+.BI -s " sites"
+Only request lyrics from
+.I sites,
+a comma separated list.
+.TP
+.BI -t " type"
+.I Type
+is used with the
+.I fetch
+command and can be one of:
+.I first, all, links.
+For
+.I all
+multiple lyrics may be returned by the lyricd, each is printed.
+For
+.I first
+the search stops after the first hit.  Links to other hits are still displayed though.
+For
+.I links
+only links to hits are displayed.  With
+.B -v
+commands to retrieve the lyric from such hits are displayed.
+.TP
+.B -v
+Enable verbose output.
+.TP
+.B -d
+Enable debugging output.
+.SH SEE ALSO
+.IR lyricd (1),
+.IR lyrics (2)

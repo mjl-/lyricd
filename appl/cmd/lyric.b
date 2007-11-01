@@ -6,7 +6,6 @@ include "arg.m";
 include "bufio.m";
 	bufio: Bufio;
 	Iobuf: import bufio;
-include "regex.m";
 include "lyrics.m";
 
 sys: Sys;
