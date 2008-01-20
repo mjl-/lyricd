@@ -42,7 +42,7 @@ init(nil: ref Draw->Context, args: list of string)
 	bufio = load Bufio Bufio->PATH;
 	lyricutils = load Lyricutils Lyricutils->PATH;
 	if(lyricutils == nil)
-		error("loading lyricutils");
+		error(sprint("loading lyricutils: %r"));
 	lyricutils->init();
 
 	arg->init(args);

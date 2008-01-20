@@ -53,13 +53,13 @@ get(url: string): (ref Lyric, string)
 		return (nil, err);
 	say("have html");
 
-	restr := "<br><Script([.\n]*.*)*</script>(([.\n]*.*)*)<hr size=1 color=#cccccc>If you find some error in";
+	restr := "<font color=Blue>Print the Lyrics</font></a><br></TD></TR>\n</TABLE>(([.\n]*.*)*)<hr size=1 color=#cccccc>If you find some error in";
 	hit := find(restr, body);
 	if(hit == nil) {
 		say("no lyric found");
 		return (nil, "no lyric found");
 	}
-	text := hit[2];
+	text := hit[1];
 	text = sanitize(text);
 	say("have lyric");
 	return (Lyric.mk(name, url, text, 0), nil);

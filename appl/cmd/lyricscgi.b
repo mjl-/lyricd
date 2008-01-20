@@ -190,9 +190,6 @@ init(nil: ref Draw->Context, args: list of string)
 
 
 			host := env->getenv("HTTP_HOST");
-			port := env->getenv("SERVER_PORT");
-			if(port != "" && port != "80")
-				host += ":"+port;
 			print("Status: 303 See other\r\n");
 			print("location: http://%s%s/%s\r\n\r\n", host, env->getenv("SCRIPT_NAME"), cgi->encodepath(loc));
 
