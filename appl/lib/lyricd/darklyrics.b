@@ -25,11 +25,11 @@ init()
 
 lyricurl(url: string, title: list of string): string
 {
-	(body, err) := httpget(url, "latin1");
+	(body, err) := httpget(url, nil);
 	if(err != nil)
 		return nil;
 	say("have lyric html");
-	rstr := "<A HREF=\"#([0-9]+)\">([^<]*)</a><br>";
+	rstr := "<a href=\"#([0-9]+)\">([^<]*)</a><br>";
 	hits := findall(rstr, body);
 	say(sprint("lyric page has %d lyrics", len hits));
 	
@@ -51,12 +51,12 @@ search(title, artist: list of string): (list of ref Link, string)
 	args := list of {("q", join(terms, " "))};
 	url := "http://search.darklyrics.com/cgi-bin/dseek.cgi?"+cgi->pack(args);
 	say("searching in url="+url);
-	(body, err) := httpget(url, "latin1");
+	(body, err) := httpget(url, nil);
 	if(err != nil)
 		return (nil, err);
 	say("have html");
 
-	rstr := "<a href=\"(http://www.darklyrics.com/lyrics/.*\\.html)\".*><b><B>(.*)</B> LYRICS - <B>(.*)</B>.*</b></a>";
+	rstr := "<a href=\"(http://www.darklyrics.com/lyrics/.*\\.html)\".*><b>(.*) LYRICS - (.*)</b></a>";
 	hits := findall(rstr, body);
 	say(sprint("have %d hits", len hits));
 	links := array[3] of ref Link;
@@ -87,25 +87,25 @@ get(url: string): (ref Lyric, string)
 	url = url[:len url-1];
 	num := int numstr;
 
-	(body, err) := httpget(url, "latin1");
+	(body, err) := httpget(url, nil);
 	if(err != nil)
 		return (nil, err);
 	say("have html");
 
 	text: string;
-	rstr := sprint("<a name=%d><FONT color=#DDDDDD><b>.*</b></font><br>(([.\n]*.*)*)<a name=%d", num, num+1);
+	rstr := sprint("<a name=%d><font color=#DDDDDD><b>.*</b></font><br>(([.\n]*.*)*)<a name=%d", num, num+1);
 	hit := find(rstr, body);
 	if(hit != nil) {
 		text = hit[1];
 	} else {
-		rstr = sprint("<a name=%d><FONT color=#DDDDDD><b>.*</b></font><br>(([.\n]*.*)*)<BR>", num);
+		rstr = sprint("<a name=%d><font color=#DDDDDD><b>.*</b></font><br>(([.\n]*.*)*)<br>", num);
 		hit = find(rstr, body);
 		if(hit == nil) {
 			say("no lyric in html");
 			return (nil, "no lyric found");
 		}
 		text = hit[1];
-		rstr2 := sprint("(([.\n]*.*)*)<FONT size=1 color=#FFFFCC>.*");
+		rstr2 := sprint("(([.\n]*.*)*)<font size=1 color=#FFFFCC>.*");
 		hit2 := find(rstr2, text);
 		if(hit2 != nil) {
 			say("found trailer in lyric, removing");
