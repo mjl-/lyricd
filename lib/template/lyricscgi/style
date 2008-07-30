@@ -1,5 +1,5 @@
 %include httpheaderscss
-body		{ font-family: trebuchet ms, verdana, sans-serif; font-size: 0.8em; }
+body		{ font-family: "trebuchet ms", "verdana", sans-serif; }
 div.nothing	{ margin-top: 2.5em; margin-bottom: 2.5em; }
 div.heading	{ text-align: center; width: 100%%; margin-top: 8em; }
 div.entreeform	{ text-align: center; margin: 3em; }
