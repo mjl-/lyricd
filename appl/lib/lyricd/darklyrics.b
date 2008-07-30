@@ -82,7 +82,7 @@ get(url: string): (ref Lyric, string)
 
 	numstr: string;
 	(url, numstr) = str->splitstrr(url, "#");
-	if(numstr == nil && url != nil)
+	if(url == nil)
 		return (nil, "bad url");
 	url = url[:len url-1];
 	num := int numstr;
