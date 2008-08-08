@@ -1,0 +1,8 @@
+<../mkconfig
+
+MAN=\
+	1/lyric\
+	1/lyricd\
+	2/lyrics\
+
+<mkman
