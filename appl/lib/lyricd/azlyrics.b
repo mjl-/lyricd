@@ -64,11 +64,11 @@ get(url: string): (ref Lyric, string)
 		return (nil, err);
 	say("have html");
 
-	rstr := "</[bB]>(<BR>)?<BR>(([.\n]*.*)*)\n<BR><BR>";
+	rstr := "</b><BR><BR>(([.\n]*.*)*)\n<BR><BR>";
 	hit := find(rstr, body);
 	if(hit == nil)
 		return (nil, "no lyric found");
-	text := hit[2];
+	text := hit[1];
 	text = sanitize(text);
 	say("have lyric");
 	return (Lyric.mk(name, url, text, 0), nil);

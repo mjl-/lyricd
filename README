@@ -1,23 +1,41 @@
-lyricd - lyric daemon and client
+# status
+
+has been in use for quite some time.  is still updated to account
+for changed html.
+
+
+# intro
+
+this package contains a lyric serving daemon, a client and a scgi program
+to serve as web frontend.
+
+
+# install & run
 
 to install make sure this directory has a mkconfig.  you can bind/symlink
 the mkconfig from your inferno installation.  now execute "mk install",
 manually copy the lib/template/lyricscgi to your inferno installation,
 create dis/lib/lyricd and all should be well.  you also need the package
-"web", available from http://www.xs4all.nl/~mechiel/.
+"web", available from http://www.ueber.net/code/r/web.
 
-lyricd and lyric, the daemon and client, are documented in their manual pages.
+see the manual pages for usage information.
 
 the lyric library, lyrics, is not documented since it is unlikely anyone
 will ever write another client.
 
 lyricscgi is also undocumented since there is nothing
 to document about it, use it with scgid, available at
-http://www.xs4all.nl/~mechiel/inferno/.
+http://www.ueber.net/code/r/scgid.
 
-retrieve the latest version by:
 
-	hg clone static-http://www.ueber.net/who/mjl/hg/lyricd/
+# latest version
+
+the latest version can be found at:
+
+	http://www.ueber.net/code/r/lyricd
+
+
+# licence & author
 
 all files are in the public domain.  bug reports, new code, comments
 and more are welcome at mechiel@xs4all.nl or mechiel@ueber.net.

@@ -120,12 +120,6 @@ sort(l: list of ref Result): list of ref Result
 	return r;
 }
 
-usage()
-{
-	fprint(sys->fildes(2), "usage: lyricscgi\n");
-	raise "fail:usage";
-}
-
 modinit(): string
 {
 	sys = load Sys Sys->PATH;
