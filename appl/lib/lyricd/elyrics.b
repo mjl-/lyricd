@@ -56,7 +56,7 @@ get(url: string): (ref Lyric, string)
 		return (nil, err);
 	say("have html");
 
-	rstr := "<strong>[^<]* lyrics</strong>(([.\n]*.*)*)<br></div>\n\r\n\t*\r\n";
+	rstr := "<strong>[^<]* lyrics</strong>(([.\n]*.*)*)</div>\n\r\n\t\t*\r\n\t\t*";
 	hit := find(rstr, body);
 	if(hit == nil)
 		return (nil, "no lyric found");
