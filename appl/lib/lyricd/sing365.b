@@ -54,7 +54,7 @@ get(url: string): (ref Lyric, string)
 	say("have html");
 
 	#restr := "<font color=Blue>Print the Lyrics</font></a><br></TD></TR>\n</TABLE>(([.\n]*.*)*)<hr size=1 color=#cccccc>If you find some error in";
-	restr := "<br><br></DIV>(([.\n]*.*)*)<BR>\n<DIV ALIGN=center><br><br>";
+	restr := "<br><br></div>(([.\n]*.*)*)<br>\n<div align=\"center\"><br><br>";
 	hit := find(restr, body);
 	if(hit == nil) {
 		say("no lyric found");
