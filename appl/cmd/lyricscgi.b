@@ -1,26 +1,27 @@
 implement Lyricscgi;
 
 include "sys.m";
+	sys: Sys;
+	print, sprint: import sys;
 include "draw.m";
 include "env.m";
+	env: Env;
 include "bufio.m";
 	bufio: Bufio;
 	Iobuf: import bufio;
 include "string.m";
+	str: String;
+include "lists.m";
+	lists: Lists;
 include "template.m";
+	template: Template;
+	Form: import template;
 include "cgi.m";
+	cgi: Cgi;
+	Fields: import cgi;
 include "lyrics.m";
-
-sys: Sys;
-env: Env;
-str: String;
-template: Template;
-cgi: Cgi;
-lyrics: Lyrics;
-print, fprint, sprint: import sys;
-Form: import template;
-Fields: import cgi;
-Lsrv, Lyric, Result: import lyrics;
+	lyrics: Lyrics;
+	Lsrv, Lyric, Result: import lyrics;
 
 addr: con "net!localhost!7115";
 
@@ -29,101 +30,11 @@ Lyricscgi: module {
 	init:	fn(nil: ref Draw->Context, args: list of string);
 };
 
-
-error(err: string)
-{
-	fprint(sys->fildes(2), "%s", err);
-	print("Status: 200 OK\r\n");
-	print("content-type: text/plain; charset=utf-8\r\n\r\nerror: %s\n", err);
-	raise "fail:"+err;
-}
-
-badpath(err: string)
-{
-	fprint(sys->fildes(2), "badpath: %s", err);
-	print("Status: 404 File not found\r\n");
-	print("content-type: text/plain; charset=utf-8\r\n\r\nerror: %s\n", err);
-	raise "fail:"+err;
-}
-
-tokenize(s: string): array of string
-{
-	l: list of string;
-	elem: string;
-	while(s != nil) {
-		(elem, s) = str->splitl(s, "/");
-		l = elem::l;
-		if(s != nil)
-			s = s[1:];
-	}
-	a := array[len l] of string;
-	i := 0;
-	for(l = rev(l); l != nil; l = tl l)
-		a[i++] = hd l;
-	return a;
-}
-
-rev[t](l: list of t): list of t
-{
-	r: list of t;
-	for(; l != nil; l = tl l)
-		r = hd l :: r;
-	return r;
-}
-
-lyricvars(l: ref Lyric): list of (string, string)
-{
-	return list of {
-		("success", string l.success),
-		("site", l.site),
-		("id", l.id),
-		("score", sprint("%.02f", l.score)),
-		("text", l.text),
-	};
-}
-
-resultvars(r: ref Result): list of (string, string)
-{
-	return list of {
-		("hit", string r.hit),
-		("site", r.site),
-		("id", r.id),
-		("score", sprint("%.02f", r.score)),
-	};
-}
-
-insert(a: array of ref Result, j: int, e: ref Result)
-{
-	for(i := 0; i < j; i++)
-		if(e.score < a[i].score) {
-			for(k := j; k > i; k--)
-				a[k] = a[k-1];
-			a[i] = e;
-			return;
-		}
-	a[j] = e;
-}
-
-sort(l: list of ref Result): list of ref Result
-{
-	a := array[len l] of ref Result;
-	i := 0;
-	while(l != nil) {
-		insert(a, i, hd l);
-		l = tl l;
-		i++;
-	}
-
-	r: list of ref Result;
-	for(j := len a - 1; j >= 0; j--)
-		r = a[j] :: r;
-	return r;
-}
-
 modinit(): string
 {
 	sys = load Sys Sys->PATH;
 	str = load String String->PATH;
+	lists = load Lists Lists->PATH;
 	bufio = load Bufio Bufio->PATH;
 	env = load Env Env->PATH;
 	template = load Template Template->PATH;
@@ -149,14 +60,6 @@ init(nil: ref Draw->Context, args: list of string)
 	form := ref Form("lyricscgi");
 
 	path := env->getenv("PATH_INFO");
-	if(path == "") {
-		print("Status: 301 Moved permanently\r\n");
-		print("location: %s/\r\n\r\n", env->getenv("SCRIPT_NAME"));
-		return;
-	}
-
-	if(path[0] == '/')
-		path = path[1:];
 	elems := tokenize(path);
 	case len elems {
 	0 =>
@@ -174,6 +77,8 @@ init(nil: ref Draw->Context, args: list of string)
 
 			if(artist == "")
 				artist = "_";
+			if(title == "")
+				error("title can't be empty.  please go back and enter a title.");
 
 			loc := artist+"/"+title;
 			if(elems[0] == "get") {
@@ -185,7 +90,7 @@ init(nil: ref Draw->Context, args: list of string)
 
 			host := env->getenv("HTTP_HOST");
 			print("Status: 303 See other\r\n");
-			print("location: http://%s%s/%s\r\n\r\n", host, env->getenv("SCRIPT_NAME"), cgi->encodepath(loc));
+			print("location: http://%s%s%s\r\n\r\n", host, env->getenv("SCRIPT_NAME"), cgi->encodepath(loc));
 
 		* =>
 			badpath("no such page");
@@ -236,9 +141,10 @@ init(nil: ref Draw->Context, args: list of string)
 		if(ly == nil)
 			form.print("fetchnolyric", nil);
 		form.print("fetchstartlinks", nil);
-		hits = sort(hits);
-		for(hits = rev(hits); hits != nil; hits = tl hits) {
-			r := hd hits;
+		hitsa := l2a(hits);
+		sort(hitsa, scorege);
+		for(i := len hitsa-1; i >= 0; i--) {
+			r := hitsa[i];
 			if(ly != nil && r.id == ly.id)
 				continue;
 			vars = ("artist", artist)::("title", title)::resultvars(r);
@@ -271,11 +177,13 @@ init(nil: ref Draw->Context, args: list of string)
 			}
 			results: list of ref Result;
 			(results, err) = lsrv.searchrespall();
-			if(len results == 0) {
+			if(results == nil) {
 				form.print("geterror", ("text", "error while searching: no hits")::vars);
 				return;
 			}
-			r := hd sort(results);
+			resultsa := l2a(results);
+			sort(resultsa, scorege);
+			r := resultsa[0];
 			if(!r.hit) {
 				form.print("geterror", ("text", "no lyrics found")::vars);
 				return;
@@ -294,4 +202,79 @@ init(nil: ref Draw->Context, args: list of string)
 	* =>
 		badpath("no such page");
 	}
+}
+
+tokenize(s: string): array of string
+{
+	l: list of string;
+	elem: string;
+	while(s != nil) {
+		(elem, s) = str->splitl(s, "/");
+		l = elem::l;
+		if(s != nil)
+			s = s[1:];
+	}
+	return l2a(lists->reverse(l));
+}
+
+lyricvars(l: ref Lyric): list of (string, string)
+{
+	return list of {
+		("success", string l.success),
+		("site", l.site),
+		("id", l.id),
+		("score", sprint("%.02f", l.score)),
+		("text", l.text),
+	};
+}
+
+resultvars(r: ref Result): list of (string, string)
+{
+	return list of {
+		("hit", string r.hit),
+		("site", r.site),
+		("id", r.id),
+		("score", sprint("%.02f", r.score)),
+	};
+}
+
+scorege(a, b: ref Result): int
+{
+	return a.score >= b.score;
+}
+
+# insertion sort, from local code i had.
+sort[T](a: array of T, ge: ref fn(a, b: T): int)
+{
+	for(i := 1; i < len a; i++) {
+		tmp := a[i];
+		for(j := i; j > 0 && ge(a[j-1], tmp); j--)
+			a[j] = a[j-1];
+		a[j] = tmp;
+	}
+}
+
+l2a[T](l: list of T): array of T
+{
+	a := array[len l] of T;
+	i := 0;
+	for(; l != nil; l = tl l)
+		a[i++] = hd l;
+	return a;
+}
+
+badpath(s: string)
+{
+	sys->fprint(sys->fildes(2), "badpath: %s", s);
+	print("Status: 404 File not found\r\n");
+	print("content-type: text/plain; charset=utf-8\r\n\r\nerror: %s\n", s);
+	raise "fail:"+s;
+}
+
+error(s: string)
+{
+	sys->fprint(sys->fildes(2), "%s", s);
+	print("Status: 200 OK\r\n");
+	print("content-type: text/plain; charset=utf-8\r\n\r\nerror: %s\n", s);
+	raise "fail:"+s;
 }
