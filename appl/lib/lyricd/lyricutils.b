@@ -288,6 +288,7 @@ googlesearch(domain: string, title, artist: list of string): array of (string, s
 	}
 	restr := "<h3 class=r><a href=\"([^\"]+)\" class=l>([^=]+)</a></h3>";
 	hits := findall(restr, body);
+	say(sprint("google, %d hits for domain %q", len hits, domain));
 	a := array[len hits] of (string, string);
 	for(i := 0; i < len a; i++)
 		a[i] = (htmlfmt(hits[i][1]), htmlstrip(hits[i][2]));
