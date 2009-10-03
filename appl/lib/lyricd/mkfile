@@ -12,6 +12,7 @@ TARG=\
 	plyrics.dis\
 	rarelyrics.dis\
 	sing365.dis\
+	justsomelyrics.dis\
 
 MODULES=\
 

@@ -29,7 +29,7 @@ addr := "net!localhost!7115";
 dflag := 0;
 timeout := 10;	# seconds
 
-files := array[] of {"azlyrics", "elyrics", "lyrc", "sing365", "rarelyrics", "lyricsdownload", "plyrics", "darklyrics"};
+files := array[] of {"azlyrics", "elyrics", "lyrc", "sing365", "rarelyrics", "lyricsdownload", "plyrics", "darklyrics", "justsomelyrics"};
 sites: array of Site;
 sitenames: string;
 
