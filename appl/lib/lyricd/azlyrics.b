@@ -30,14 +30,15 @@ search(title, artist: list of string): (list of ref Link, string)
 		terms = hd l::terms;
 
 	args := list of {("q", join(terms, " "))};
-	url := "http://search.azlyrics.com/cgi-bin/azseek.cgi?"+cgi->pack(args);
+	url := "http://search.azlyrics.com/search.php?"+cgi->pack(args);
 	say("searching in url="+url);
 	(body, err) := httpget(url, "latin1");
 	if(err != nil)
 		return (nil, err);
 	say("have html");
 
-	rstr := "<FONT Face=Verdana size=2><a href=\"(http://www.azlyrics.com/lyrics/.*)\" TARGET=\"_blank\"><b>(.*) LYRICS - (.*)</b></a></FONT><br>";
+	# rstr := "<FONT Face=Verdana size=2><a href=\"(http://www.azlyrics.com/lyrics/.*)\" TARGET=\"_blank\"><b>(.*) LYRICS - (.*)</b></a></FONT><br>";
+	rstr := "<a href=\"(http://www.azlyrics.com/lyrics/.*)\" rel=\"external\"><b>(.*) LYRICS - (.*)</b></a><br>";
 	hits := findall(rstr, body);
 	say(sprint("have %d hits", len hits));
 	links := array[len hits] of ref Link;
@@ -64,11 +65,11 @@ get(url: string): (ref Lyric, string)
 		return (nil, err);
 	say("have html");
 
-	rstr := "\"</b><[bB][rR]>(<[bB][rR]>)?(([.\n]*.*)*)\\[ <a href=\"http://www.azlyrics.com\">";
+	rstr := "\"</b><br>\r\n(([.\r?\n]*.*)*)\\[ <a href=\"http://www.azlyrics.com/";
 	hit := find(rstr, body);
 	if(hit == nil)
 		return (nil, "no lyric found");
-	text := hit[2];
+	text := hit[1];
 	text = sanitize(text);
 	say("have lyric");
 	return (Lyric.mk(name, url, text, 0), nil);
