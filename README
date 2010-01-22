@@ -10,29 +10,51 @@ this package contains a lyric serving daemon, a client and a scgi program
 to serve as web frontend.
 
 
-# install & run
-
-to install make sure this directory has a mkconfig.  you can bind/symlink
-the mkconfig from your inferno installation.  now execute "mk install",
-manually copy the lib/template/lyricscgi to your inferno installation,
-create dis/lib/lyricd and all should be well.  you also need the package
-"web", available from http://www.ueber.net/code/r/web.
-
-see the manual pages for usage information.
-
-the lyric library, lyrics, is not documented since it is unlikely anyone
-will ever write another client.
-
-lyricscgi is also undocumented since there is nothing
-to document about it, use it with scgid, available at
-http://www.ueber.net/code/r/scgid.
-
-
-# latest version
+# download
 
 the latest version can be found at:
 
 	http://www.ueber.net/code/r/lyricd
+
+
+# install
+
+make sure you have "web" installed, see http://www.ueber.net/code/r/web.
+
+create directory "/dis/lib/lyricd" in your inferno installation.
+copy the directory and files "lib/template/lyricscgi" to your inferno
+installation.
+
+make sure you have $ROOT set, now "mk install" to compile and install
+the files.
+
+the lyric library is not documented since it is unlikely anyone
+will ever write another client.
+
+lyricscgi is also undocumented since there is not much to document
+about it.  use it with scgid, available at
+http://www.ueber.net/code/r/scgid.
+
+
+# examples
+
+this example shows how to set up a web server to run the html front end.
+
+to run a lyricd:
+
+	ndb/cs
+	lyricd -d &
+
+and an scgid:
+
+	echo 'net!localhost!4006 /dis/lyricscgi.dis lyricscgi' >scgid.conf
+	scgid -dv scgid.conf &
+
+now configure your web server.  it should pass requests for some
+paths to the scgi server at "net!localhost!4006".  you can also use
+httpd (see http://www.ueber.net/code/r/httpd):
+
+	ip/shttpd -d -s /lyrics/ net!localhost!4006 GET .
 
 
 # licence & author
