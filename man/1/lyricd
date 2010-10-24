@@ -24,7 +24,7 @@ the default is
 .IR net!localhost!7115 .
 .PP
 These sites are currently searched in:
-azlyrics, elyrics, lyrc, sing365, rarelyrics, lyricsdownload, plyrics, darklyrics, justsomelyrics.
+azlyrics, elyrics, lyrc, sing365, rarelyrics, plyrics, darklyrics, justsomelyrics.
 .SH SEE ALSO
 .IR lyric (1),
 .IR lyrics (2)

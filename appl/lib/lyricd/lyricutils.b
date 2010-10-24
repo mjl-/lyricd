@@ -286,7 +286,7 @@ googlesearch(domain: string, title, artist: list of string): array of (string, s
 		say("searching google: "+err);
 		return nil;
 	}
-	restr := "<h3 class=r><a href=\"([^\"]+)\" class=l>([^=]+)</a></h3>";
+	restr := "<h3 class=\"r\"><a href=\"([^\"]+)\" class=l[^>]*>([^=]+)</a></h3>";
 	hits := findall(restr, body);
 	say(sprint("google, %d hits for domain %q", len hits, domain));
 	a := array[len hits] of (string, string);

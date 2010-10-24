@@ -29,7 +29,7 @@ addr := "net!localhost!7115";
 dflag := 0;
 timeout := 10;	# seconds
 
-files := array[] of {"azlyrics", "elyrics", "lyrc", "sing365", "lyricsdownload", "plyrics", "darklyrics", "justsomelyrics"}; # rarelyrics has all lyrics removed (pages still exist)
+files := array[] of {"azlyrics", "elyrics", "lyrc", "sing365", "plyrics", "darklyrics", "justsomelyrics"}; # rarelyrics has all lyrics removed (pages still exist)
 sites: array of Site;
 sitenames: string;
 

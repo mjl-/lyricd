@@ -7,7 +7,6 @@ TARG=\
 	darklyrics.dis\
 	elyrics.dis\
 	lyrc.dis\
-	lyricsdownload.dis\
 	lyricutils.dis\
 	plyrics.dis\
 	rarelyrics.dis\
