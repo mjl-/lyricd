@@ -6,11 +6,10 @@ DIRS=\
 TARG=\
 	lyrics.dis\
 
-MODULES=\
-
 SYSMODULES=\
 	sys.m\
 	draw.m\
+	dial.m\
 	bufio.m\
 	string.m\
 	lyrics.m\

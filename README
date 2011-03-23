@@ -25,8 +25,8 @@ create directory "/dis/lib/lyricd" in your inferno installation.
 copy the directory and files "lib/template/lyricscgi" to your inferno
 installation.
 
-make sure you have $ROOT set, now "mk install" to compile and install
-the files.
+make sure you have $ROOT set, then run "mk install" to compile and
+install the files.
 
 the lyric library is not documented since it is unlikely anyone
 will ever write another client.
@@ -60,4 +60,4 @@ httpd (see http://www.ueber.net/code/r/httpd):
 # licence & author
 
 all files are in the public domain.  bug reports, new code, comments
-and more are welcome at mechiel@xs4all.nl or mechiel@ueber.net.
+and more are welcome at mechiel@ueber.net.

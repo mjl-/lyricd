@@ -23,7 +23,7 @@ include "lyrics.m";
 	lyrics: Lyrics;
 	Lsrv, Lyric, Result: import lyrics;
 
-addr: con "net!localhost!7115";
+addr: con "localhost";
 
 Lyricscgi: module {
 	modinit:	fn(): string;

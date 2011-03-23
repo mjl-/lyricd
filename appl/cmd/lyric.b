@@ -13,7 +13,7 @@ lyrics: Lyrics;
 Lsrv, ALL, FIRST, LINKS: import lyrics;
 print, fprint, sprint: import sys;
 
-addr := "net!localhost!7115";
+addr := "localhost";
 dflag := 1;
 vflag := 1;
 sites: list of string;

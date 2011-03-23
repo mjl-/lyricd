@@ -1,15 +1,17 @@
 implement Lyrics;
 
 include "sys.m";
+	sys: Sys;
 include "draw.m";
 include "bufio.m";
+	bufio: Bufio;
+	Iobuf: import bufio;
+include "dial.m";
+	dial: Dial;
 include "string.m";
+	str: String;
 include "lyrics.m";
 
-sys: Sys;
-bufio: Bufio;
-Iobuf: import bufio;
-str: String;
 
 sprint, fprint, print: import sys;
 
@@ -19,6 +21,7 @@ init()
 	if(sys != nil)
 		return;
 	sys = load Sys Sys->PATH;
+	dial = load Dial Dial->PATH;
 	str = load String String->PATH;
 	bufio = load Bufio Bufio->PATH;
 }
@@ -69,10 +72,11 @@ connect(addr: string): (ref Lsrv, string)
 {
 	init();
 
-	(r, conn) := sys->dial(addr, nil);
-	if(r < 0)
-		return (nil, sprint("dialing %s: %r", addr));
-	fd := conn.dfd;
+	addr = dial->netmkaddr(addr, "net", "7115");
+	cc := dial->dial(addr, nil);
+	if(cc == nil)
+		return (nil, sprint("dial %s: %r", addr));
+	fd := cc.dfd;
 	bin := bufio->fopen(fd, bufio->OREAD);
 	if(bin == nil)
 		return (nil, sprint("bufio open fd: %r"));
